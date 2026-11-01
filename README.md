@@ -1,3 +1,10 @@
+# WorkFlow
+
+## Documentation
+- [Project Documentation](docs/WorkFlow_Project_Documentation_Part1.pdf)
+- [Team Task Distribution](docs/Team%20Task%20Distribution.pdf)
+- [Design](docs/WorkFlow%20-%20Design.pdf)
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
