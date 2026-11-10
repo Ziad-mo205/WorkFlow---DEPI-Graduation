@@ -1,4 +1,5 @@
 import { FiTrash2 } from 'react-icons/fi'
+import Swal from 'sweetalert2'
 
 const statusStyles = {
   'Active': 'bg-blue-100 text-blue-700',
@@ -53,14 +54,35 @@ const ProjectCard = ({ project, onDelete }) => {
           </span>
 
           <button
-            onClick={() => {
-              if (window.confirm(`Delete "${name}"?`)) onDelete(id)
-            }}
-            className="rounded-full p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"
-            aria-label="Delete project"
-          >
-            <FiTrash2 />
-          </button>
+  onClick={() => {
+    Swal.fire({
+      title: `Delete "${name}"?`,
+      text: "This project will be removed and you won't be able to undo it.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#dc2626',
+      cancelButtonColor: '#64748b',
+      confirmButtonText: 'Yes, delete it',
+      cancelButtonText: 'Cancel',
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+  onDelete(id)
+  Swal.fire({
+    title: 'Deleted!',
+    icon: 'success',
+    timer: 1200,
+    showConfirmButton: false,
+  })
+}
+    })
+  }}
+  className="rounded-full p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"
+  aria-label="Delete project"
+>
+  <FiTrash2 />
+</button>
+
         </div>
       </div>
 
