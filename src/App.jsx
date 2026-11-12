@@ -14,6 +14,7 @@ import Settings from "./pages/Settings";
 import AdminDashboard from "./pages/AdminDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import TaskDetails from "./pages/TaskDetails";
+import MainLayout from "./Layouts/MainLayout";
 
 function App() {
   return (
@@ -21,19 +22,21 @@ function App() {
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<LogIn />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/projects" element={<ProjectsList />} />
-      <Route path="/projects/:projectId" element={<ProjectDetails />} />
-      <Route path="/tasks" element={<TasksList />} />
-      <Route path="/kanban" element={<KanbanBoard />} />
-      <Route path="/employees" element={<EmployeesManagement />} />
-      <Route path="/leave-requests" element={<LeaveRequests />} />
-      <Route path="/announcements" element={<Announcements />} />
-      <Route path="/profile" element={<UserProfile />} />
-      <Route path="/settings" element={<Settings />} />
-      <Route path="/admin-dashboard" element={<AdminDashboard />} />
-      <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
-      <Route path="/tasks/:taskId" element={<TaskDetails />} />
+      <Route element={<MainLayout />}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/projects" element={<ProjectsList />} />
+        <Route path="/projects/:projectId" element={<ProjectDetails />} />
+        <Route path="/tasks" element={<TasksList />} />
+        <Route path="/kanban" element={<KanbanBoard />} />
+        <Route path="/employees" element={<EmployeesManagement />} />
+        <Route path="/leave-requests" element={<LeaveRequests />} />
+        <Route path="/announcements" element={<Announcements />} />
+        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
+        <Route path="/tasks/:taskId" element={<TaskDetails />} />
+      </Route>
     </Routes>
   );
 }
