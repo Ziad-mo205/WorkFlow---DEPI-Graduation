@@ -1,6 +1,7 @@
 import { Link, matchPath, useLocation } from "react-router-dom";
 import { FaRegBell, FaUserCircle } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
+import logo from "../assets/Logo.jpeg";
 
 const pageTitles = [
   { path: "/dashboard", title: "Dashboard" },
@@ -26,13 +27,13 @@ function Navbar() {
     <nav className="flex h-16 items-center justify-between bg-white px-6">
       <div className="flex items-center gap-26">
         <div className="flex items-center gap-2">
-          <div className="size-8 rounded-lg bg-brand" />
+          <img src={logo} alt="WorkFlow logo" className="h-8 w-auto" />
           <span className="text-xl font-bold">
             <span className="text-black">Work</span>
             <span className="text-brand">Flow</span>
           </span>
         </div>
-        <h1 className="text-lg font-semibold">{currentPage?.title}</h1>
+        <h1 className="mt-0.5 text-xl font-bold">{currentPage?.title}</h1>
       </div>
 
       <div className="flex items-center gap-4">
@@ -43,7 +44,7 @@ function Navbar() {
             placeholder="Search anything..."
             className="flex-1 bg-transparent text-sm outline-none placeholder:text-[#9ca3af]"
           />
-          <kbd className="rounded border border-[#e8eaee] px-1.5 py-0 font-['Inter'] text-[10px]">
+          <kbd className="rounded border border-[#e8eaee] px-1.5 py-0 font-['monospace'] text-[11px]">
             Ctrl K
           </kbd>
         </div>
