@@ -37,12 +37,6 @@ const AdminOverview = () => {
   return (
     <>
       {loading ? (
-        // <div className="flex mx-8 justify-between flex-col lg:flex-row m-4">
-        //   <div className="flex flex-col gap-1 mb-4">
-        //     <div className="h-6 w-48 bg-gray-200 rounded animate-pulse m-1"></div>
-        //     <div className="h-4 w-100 bg-gray-200 rounded animate-pulse m-1"></div>
-        //   </div>
-        // </div>
         <div className="m-4 mx-8 mb-8">
           <div className="h-6 w-48 bg-gray-200 rounded animate-pulse mb-4"></div>
 
@@ -83,91 +77,3 @@ const AdminOverview = () => {
 };
 
 export default AdminOverview;
-
-// import { useEffect, useState } from "react";
-
-// const AdminOverview = () => {
-//   const [isLoading, setIsLoading] = useState(true);
-
-//   const [adminName, setAdminName] = useState("Ziad");
-//   const [leaveRequests, setLeaveRequests] = useState(
-//     "5 leave requests are waiting",
-//   );
-
-//   let message;
-//   const hour = new Date().getHours();
-
-//   if (hour < 12) {
-//     message = "Good Morning";
-//   } else if (hour < 17) {
-//     message = "Good Afternoon";
-//   } else if (hour < 21) {
-//     message = "Good Evening";
-//   } else {
-//     message = "Good Night";
-//   }
-
-//   const today = new Date();
-
-//   const day = today.toLocaleDateString("en-US", {
-//     weekday: "long",
-//     year: "numeric",
-//     month: "long",
-//     day: "numeric",
-//   });
-
-//   useEffect(() => {
-//     // Simulating API loading
-//     const timer = setTimeout(() => {
-//       setIsLoading(false);
-//     }, 1500);
-
-//     return () => clearTimeout(timer);
-//   }, []);
-
-//   return (
-//     <div className="flex mx-8 justify-between flex-col lg:flex-row m-4">
-//       <div className="flex flex-col justify-between mb-4">
-//         {isLoading ? (
-//           <>
-//             <div className="h-6 w-48 bg-gray-200 rounded animate-pulse mb-3"></div>
-
-//             <div className="flex flex-col lg:flex-row gap-3">
-//               <div className="h-4 w-52 bg-gray-200 rounded animate-pulse"></div>
-//               <div className="h-4 w-48 bg-gray-200 rounded animate-pulse"></div>
-//             </div>
-//           </>
-//         ) : (
-//           <>
-//             <h2 className="font-bold">
-//               {message}, {adminName}
-//             </h2>
-
-//             <div className="flex flex-col lg:flex-row">
-//               <span className="text-gray-500">{day}.</span>
-//               <span className="text-gray-500">{leaveRequests}</span>
-//             </div>
-//           </>
-//         )}
-//       </div>
-
-//       <div className="grid grid-cols-2 gap-5 mx-8">
-//         <button
-//           disabled={isLoading}
-//           className="btn btn-active hover:bg-gray-300 rounded-xl transition py-7 md:py-4 disabled:opacity-50"
-//         >
-//           + Post Announcement
-//         </button>
-
-//         <button
-//           disabled={isLoading}
-//           className="btn btn-primary hover:bg-blue-700 rounded-xl transition py-7 md:py-4 disabled:opacity-50"
-//         >
-//           + Add Employee
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AdminOverview;
