@@ -1,5 +1,5 @@
 function Announcements() {
-  return <div>Announcements</div>
+  return <div>Announcements</div>;
 }
 
-export default Announcements
+export default Announcements;
