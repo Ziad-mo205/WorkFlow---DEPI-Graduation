@@ -30,6 +30,7 @@ function App() {
         <Route path="/kanban" element={<KanbanBoard />} />
         <Route path="/employees" element={<EmployeesManagement />} />
         <Route path="/leave-requests" element={<LeaveRequests />} />
+        <Route path="/LeaveRequests" element={<LeaveRequests />} />
         <Route path="/announcements" element={<Announcements />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/settings" element={<Settings />} />
