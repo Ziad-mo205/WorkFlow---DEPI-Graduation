@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import AuthProvider from "./context/AuthContext";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import ManagerDashboard from "./pages/ManagerDashboard";
@@ -15,14 +16,16 @@ import AdminDashboard from "./pages/AdminDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import TaskDetails from "./pages/TaskDetails";
 import MainLayout from "./Layouts/MainLayout";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <Routes>
+    <AuthProvider>
+      <Routes>
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<LogIn />} />
-      <Route element={<MainLayout />}>
+      <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
         <Route path="/manager-dashboard" element={<ManagerDashboard />} />
         <Route path="/projects" element={<ProjectsList />} />
         <Route path="/projects/:projectId" element={<ProjectDetails />} />
@@ -37,7 +40,8 @@ function App() {
         <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
         <Route path="/tasks/:taskId" element={<TaskDetails />} />
       </Route>
-    </Routes>
+      </Routes>
+    </AuthProvider>
   );
 }
 
