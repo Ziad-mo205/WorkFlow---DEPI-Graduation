@@ -4,7 +4,7 @@ import { FiSearch, FiMenu } from "react-icons/fi";
 import logo from "../assets/Logo.jpeg";
 
 const pageTitles = [
-  { path: "/dashboard", title: "Dashboard" },
+  { path: "/manager-dashboard", title: "Dashboard" },
   { path: "/admin-dashboard", title: "Dashboard" },
   { path: "/employee-dashboard", title: "Dashboard" },
   { path: "/projects", title: "Projects List" },

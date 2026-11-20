@@ -9,13 +9,26 @@ import {
 import { FaUserCircle } from "react-icons/fa";
 import logo from "../assets/Logo.jpeg";
 
+const user = { name: "Mohamed Mostafa", role: "Manager" };
+
 const links = [
-  { to: "/dashboard", label: "Dashboard", icon: HiOutlineHome },
-  { to: "/projects", label: "Projects", icon: HiOutlineFolder },
-  { to: "/tasks", label: "Tasks", icon: HiOutlineCheck },
-  { to: "/leave-requests", label: "Leave Requests", icon: HiOutlineCalendar },
-  { to: "/announcements", label: "Announcements", icon: HiOutlineMegaphone },
+  {
+    label: "Dashboard",
+    icon: HiOutlineHome,
+    to: {
+      Admin: "/admin-dashboard",
+      Manager: "/manager-dashboard",
+      Employee: "/employee-dashboard",
+    },
+  },
+  { label: "Projects", icon: HiOutlineFolder, to: "/projects" },
+  { label: "Tasks", icon: HiOutlineCheck, to: "/tasks" },
+  { label: "Leave Requests", icon: HiOutlineCalendar, to: "/leave-requests" },
+  { label: "Announcements", icon: HiOutlineMegaphone, to: "/announcements" },
 ];
+
+const getPath = (to) =>
+  typeof to === "string" ? to : (to[user.role] ?? "/manager-dashboard");
 
 function Sidebar({ isOpen, onClose }) {
   return (
@@ -41,10 +54,10 @@ function Sidebar({ isOpen, onClose }) {
         </div>
 
         <nav className="flex flex-col gap-1 px-3 pb-4 pt-2 lg:py-4">
-          {links.map(({ to, label, icon: Icon }) => (
+          {links.map(({ label, icon: Icon, to }) => (
             <NavLink
-              key={to}
-              to={to}
+              key={label}
+              to={getPath(to)}
               onClick={onClose}
               className={({ isActive }) =>
                 `flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
@@ -70,10 +83,10 @@ function Sidebar({ isOpen, onClose }) {
               <FaUserCircle className="shrink-0 text-3xl text-[#9ca3af]" />
               <div className="min-w-0">
                 <p className="truncate text-[13px] font-semibold leading-tight text-gray-900">
-                  Mohamed Mostafa
+                  {user.name}
                 </p>
                 <p className="text-[11px] font-bold leading-tight text-emerald-600">
-                  Employee
+                  {user.role}
                 </p>
               </div>
             </NavLink>

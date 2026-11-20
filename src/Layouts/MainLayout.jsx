@@ -14,7 +14,7 @@ function MainLayout() {
           isOpen={isSidebarOpen}
           onClose={() => setIsSidebarOpen(false)}
         />
-        <main className="min-w-0 flex-1 overflow-y-auto bg-base-200 p-6">
+        <main className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto bg-[#f5f6fa] p-4 sm:p-6">
           <Outlet />
         </main>
       </div>

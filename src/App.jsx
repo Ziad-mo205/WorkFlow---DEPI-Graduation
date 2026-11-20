@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
-import Dashboard from "./pages/Dashboard";
+import ManagerDashboard from "./pages/ManagerDashboard";
 import ProjectsList from "./pages/ProjectsList";
 import ProjectDetails from "./pages/ProjectDetails";
 import TasksList from "./pages/TasksList";
@@ -23,7 +23,7 @@ function App() {
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<LogIn />} />
       <Route element={<MainLayout />}>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/manager-dashboard" element={<ManagerDashboard />} />
         <Route path="/projects" element={<ProjectsList />} />
         <Route path="/projects/:projectId" element={<ProjectDetails />} />
         <Route path="/tasks" element={<TasksList />} />
