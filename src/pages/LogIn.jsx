@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { FiCheck, FiEye, FiEyeOff } from "react-icons/fi";
+import logo from "../assets/Logo.jpeg";
 
 function LogIn() {
   const { login, message, setMessage } = useAuth();
@@ -23,7 +24,7 @@ function LogIn() {
     {/* Left side */}
     <section className="hidden bg-linear-to-br from-indigo-600 to-indigo-900 p-8 text-white lg:block lg:w-1/2 lg:p-16">
       <div className="flex items-center gap-3 text-2xl font-bold">
-        <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-indigo-600"><FiCheck aria-hidden="true" /></span>
+        <img src={logo} alt="WorkFlow logo" className="h-9 w-9 rounded-lg" />
         <span>Work<span className="text-indigo-200">Flow</span></span>
       </div>
 
@@ -69,7 +70,7 @@ function LogIn() {
     <section className="flex items-center justify-center p-6 lg:min-h-screen lg:w-1/2 lg:p-12">
       <div className="w-full max-w-md py-10">
         <div className="mb-6 flex items-center gap-3 text-2xl font-bold lg:hidden">
-          <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 text-white"><FiCheck aria-hidden="true" /></span>
+          <img src={logo} alt="WorkFlow logo" className="h-9 w-9 rounded-lg" />
           <span>Work<span className="text-indigo-600">Flow</span></span>
         </div>
         <h2 className="text-xl font-bold lg:text-3xl">Welcome back <span aria-hidden="true">👋</span></h2>
