@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { FiCheck, FiEye, FiEyeOff, FiPlus, FiUser } from "react-icons/fi";
 
 function SignUp() {
@@ -179,7 +180,7 @@ function SignUp() {
           {message && <p role="status" className="mt-3 text-sm text-indigo-700">{message}</p>}
         </form>
 
-        <p className="mt-4 text-center text-sm text-gray-500">Already have an account? <a href="/login" className="font-semibold text-indigo-600 hover:underline">Log in</a></p>
+        <p className="mt-4 text-center text-sm text-gray-500">Already have an account? <Link to="/login" className="font-semibold text-indigo-600 hover:underline">Log in</Link></p>
       </div>
     </section>
   </main>
