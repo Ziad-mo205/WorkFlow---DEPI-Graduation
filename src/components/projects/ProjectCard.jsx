@@ -1,32 +1,33 @@
-import { FiTrash2 } from 'react-icons/fi'
-import Swal from 'sweetalert2'
+import { FiTrash2 } from "react-icons/fi";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const statusStyles = {
-  'Active': 'bg-blue-100 text-blue-700',
-  'On Hold': 'bg-orange-100 text-orange-700',
-  'Completed': 'bg-green-100 text-green-700',
-}
+  Active: "bg-blue-100 text-blue-700",
+  "On Hold": "bg-orange-100 text-orange-700",
+  Completed: "bg-green-100 text-green-700",
+};
 
 const avatarColors = [
-  'bg-indigo-500',
-  'bg-sky-500',
-  'bg-emerald-500',
-  'bg-amber-500',
-  'bg-pink-500',
-  'bg-violet-500',
-]
+  "bg-indigo-500",
+  "bg-sky-500",
+  "bg-emerald-500",
+  "bg-amber-500",
+  "bg-pink-500",
+  "bg-violet-500",
+];
 
 const getInitials = (name) =>
   name
-    .split(' ')
+    .split(" ")
     .map((word) => word[0])
-    .join('')
+    .join("")
     .slice(0, 2)
-    .toUpperCase()
+    .toUpperCase();
 
 const Avatar = ({ name }) => {
-  const hash = [...name].reduce((sum, char) => sum + char.charCodeAt(0), 0)
-  const color = avatarColors[hash % avatarColors.length]
+  const hash = [...name].reduce((sum, char) => sum + char.charCodeAt(0), 0);
+  const color = avatarColors[hash % avatarColors.length];
 
   return (
     <div
@@ -34,82 +35,92 @@ const Avatar = ({ name }) => {
     >
       {getInitials(name)}
     </div>
-  )
-}
+  );
+};
 
 const ProjectCard = ({ project, onDelete }) => {
-  const { id, name, description, status, manager, progress, dueDate, members } = project
+  const { id, name, description, status, manager, progress, dueDate, members } =
+    project;
+
+  const navigate = useNavigate();
 
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
-      {/* العنوان + الحالة + حذف */}
-      <div className="flex items-center justify-between gap-2">
-        <h3 className="min-w-0 break-words text-lg font-bold text-slate-900">{name}</h3>
-
-        <div className="flex shrink-0 items-center gap-2">
+    <article
+      onClick={() => navigate(`/projects/${id}`)}
+      className="flex h-full min-w-0 cursor-pointer flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md sm:p-6"
+    >
+      <div className="flex min-w-0 items-start justify-between gap-3">
+        <h3 className="min-w-0 break-words text-lg font-bold text-slate-900">
+          {name}
+        </h3>
+        <div className="flex shrink-0 items-center gap-1.5">
           <span
-            className={`rounded-full px-3 py-1 text-xs font-semibold ${statusStyles[status]}`}
+            className={`rounded-full px-2.5 py-1 text-center text-xs font-semibold sm:px-3 ${statusStyles[status] ?? "bg-slate-100 text-slate-700"}`}
           >
             {status}
           </span>
 
           <button
-  onClick={() => {
-    Swal.fire({
-      title: `Delete "${name}"?`,
-      text: "This project will be removed and you won't be able to undo it.",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#dc2626',
-      cancelButtonColor: '#64748b',
-      confirmButtonText: 'Yes, delete it',
-      cancelButtonText: 'Cancel',
-      reverseButtons: true,
-    }).then((result) => {
-      if (result.isConfirmed) {
-  onDelete(id)
-  Swal.fire({
-    title: 'Deleted!',
-    icon: 'success',
-    timer: 1200,
-    showConfirmButton: false,
-  })
-}
-    })
-  }}
-  className="rounded-full p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"
-  aria-label="Delete project"
->
-  <FiTrash2 />
-</button>
-
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              Swal.fire({
+                title: `Delete "${name}"?`,
+                text: "This project will be removed and you won't be able to undo it.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#dc2626",
+                cancelButtonColor: "#64748b",
+                confirmButtonText: "Yes, delete it",
+                cancelButtonText: "Cancel",
+                reverseButtons: true,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  onDelete(id);
+                  Swal.fire({
+                    title: "Deleted!",
+                    icon: "success",
+                    timer: 1200,
+                    showConfirmButton: false,
+                  });
+                }
+              });
+            }}
+            className="shrink-0 rounded-full p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"
+            aria-label={`Delete ${name}`}
+          >
+            <FiTrash2 />
+          </button>
         </div>
       </div>
 
-      {/* الوصف */}
-      <p className="mt-4 break-words text-slate-500">{description}</p>
+      <p className="mt-4 break-words text-sm text-slate-500 sm:text-base">
+        {description}
+      </p>
 
-      {/* المدير */}
-      <div className="mt-3 flex items-center gap-2">
+      <div className="mt-3 flex min-w-0 items-center gap-2">
         <Avatar name={manager} />
-        <span className="text-sm text-slate-500">{manager} · Manager</span>
+        <span className="min-w-0 break-words text-sm text-slate-500">
+          {manager} · Manager
+        </span>
       </div>
 
-      {/* الجزء السفلي: ثابت في آخر الكارت */}
       <div className="mt-auto pt-6">
-        <div className="flex items-center justify-between text-sm text-slate-500">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-sm text-slate-500">
           <span>{progress}% complete</span>
-          <span>Due {dueDate}</span>
+          <span className="break-words">Due {dueDate}</span>
         </div>
 
-        <div className="mt-2 flex -space-x-2">
+        <div className="mt-2 flex flex-wrap gap-y-2 pl-2">
           {members.map((member) => (
-            <Avatar key={member} name={member} />
+            <span key={member} className="-ml-2">
+              <Avatar name={member} />
+            </span>
           ))}
         </div>
       </div>
-    </div>
-  )
-}
+    </article>
+  );
+};
 
-export default ProjectCard
+export default ProjectCard;
