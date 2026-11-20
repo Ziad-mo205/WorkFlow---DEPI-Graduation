@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { FiCheck, FiEye, FiEyeOff } from "react-icons/fi";
 
@@ -119,7 +120,7 @@ function LogIn() {
           {message && <p role="status" className="mt-3 text-sm text-indigo-700">{message}</p>}
         </form>
 
-        <p className="mt-5 text-center text-sm text-gray-500">Don’t have an account? <a href="/signup" className="font-semibold text-indigo-600 hover:underline">Register</a></p>
+        <p className="mt-5 text-center text-sm text-gray-500">Don’t have an account? <Link to="/signup" className="font-semibold text-indigo-600 hover:underline">Register</Link></p>
         <p className="text-center text-xs text-gray-500">Having trouble? Contact your administrator.</p>
       </div>
     </section>
