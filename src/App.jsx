@@ -16,6 +16,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import TaskDetails from "./pages/TaskDetails";
 import MainLayout from "./Layouts/MainLayout";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -30,8 +31,9 @@ function App() {
         <Route path="/projects/:projectId" element={<ProjectDetails />} />
         <Route path="/tasks" element={<TasksList />} />
         <Route path="/kanban" element={<KanbanBoard />} />
-        <Route path="/employees" element={<EmployeesManagement />} />
+        <Route path="/EmployeesManagement" element={<EmployeesManagement />} />
         <Route path="/leave-requests" element={<LeaveRequests />} />
+        <Route path="/LeaveRequests" element={<LeaveRequests />} />
         <Route path="/announcements" element={<Announcements />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/settings" element={<Settings />} />
@@ -39,6 +41,7 @@ function App() {
         <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
         <Route path="/tasks/:taskId" element={<TaskDetails />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthProvider>
   );
