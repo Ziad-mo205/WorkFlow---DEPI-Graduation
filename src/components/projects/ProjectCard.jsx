@@ -1,5 +1,6 @@
 import { FiTrash2 } from "react-icons/fi";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const statusStyles = {
   Active: "bg-blue-100 text-blue-700",
@@ -41,22 +42,28 @@ const ProjectCard = ({ project, onDelete }) => {
   const { id, name, description, status, manager, progress, dueDate, members } =
     project;
 
+  const navigate = useNavigate();
+
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
-      <div className="flex items-center justify-between gap-2">
+    <article
+      onClick={() => navigate(`/projects/${id}`)}
+      className="flex h-full min-w-0 cursor-pointer flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md sm:p-6"
+    >
+      <div className="flex min-w-0 items-start justify-between gap-3">
         <h3 className="min-w-0 wrap-break-words text-lg font-bold text-slate-900">
           {name}
         </h3>
-
-        <div className="flex shrink-0 items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1.5">
           <span
-            className={`rounded-full px-3 py-1 text-xs font-semibold ${statusStyles[status]}`}
+            className={`rounded-full px-2.5 py-1 text-center text-xs font-semibold sm:px-3 ${statusStyles[status] ?? "bg-slate-100 text-slate-700"}`}
           >
             {status}
           </span>
 
           <button
-            onClick={() => {
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
               Swal.fire({
                 title: `Delete "${name}"?`,
                 text: "This project will be removed and you won't be able to undo it.",
@@ -79,34 +86,40 @@ const ProjectCard = ({ project, onDelete }) => {
                 }
               });
             }}
-            className="rounded-full p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"
-            aria-label="Delete project"
+            className="shrink-0 rounded-full p-2 text-slate-400 hover:bg-red-50 hover:text-red-600"
+            aria-label={`Delete ${name}`}
           >
             <FiTrash2 />
           </button>
         </div>
       </div>
 
-      <p className="mt-4 wrap-break-words text-slate-500">{description}</p>
+      <p className="mt-4 wrap-break-words text-sm text-slate-500 sm:text-base">
+        {description}
+      </p>
 
-      <div className="mt-3 flex items-center gap-2">
+      <div className="mt-3 flex min-w-0 items-center gap-2">
         <Avatar name={manager} />
-        <span className="text-sm text-slate-500">{manager} · Manager</span>
+        <span className="min-w-0 wrap-break-words text-sm text-slate-500">
+          {manager} · Manager
+        </span>
       </div>
 
       <div className="mt-auto pt-6">
-        <div className="flex items-center justify-between text-sm text-slate-500">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-sm text-slate-500">
           <span>{progress}% complete</span>
-          <span>Due {dueDate}</span>
+          <span className="wrap-break-words">Due {dueDate}</span>
         </div>
 
-        <div className="mt-2 flex -space-x-2">
+        <div className="mt-2 flex flex-wrap gap-y-2 pl-2">
           {members.map((member) => (
-            <Avatar key={member} name={member} />
+            <span key={member} className="-ml-2">
+              <Avatar name={member} />
+            </span>
           ))}
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
