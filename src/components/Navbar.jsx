@@ -15,8 +15,8 @@ const pageTitles = [
   { path: "/employees", title: "Employees Management" },
   { path: "/leave-requests", title: "Leave Requests" },
   { path: "/announcements", title: "Announcements" },
-  { path: "/profile", title: "Profile" },
-  { path: "/settings", title: "Settings" },
+  { path: "/profile", title: "Profile & Settings" },
+  { path: "/settings", title: "Profile & Settings" },
 ];
 
 function Navbar({ onMenuClick }) {
@@ -24,7 +24,7 @@ function Navbar({ onMenuClick }) {
   const currentPage = pageTitles.find(({ path }) => matchPath(path, pathname));
 
   return (
-    <nav className="relative flex h-16 items-center justify-between bg-white px-5 lg:px-6">
+    <nav className="relative flex h-16 shrink-0 items-center justify-between bg-white px-5 lg:px-6">
       <div className="flex items-center lg:gap-26">
         <button
           type="button"
@@ -43,7 +43,7 @@ function Navbar({ onMenuClick }) {
           </span>
         </div>
 
-        <h1 className="absolute left-1/2 -translate-x-1/2 text-lg font-bold text-gray-900 lg:static lg:mt-0.5 lg:translate-x-0 lg:text-xl">
+        <h1 className="absolute left-1/2 max-w-40 -translate-x-1/2 truncate text-sm font-bold text-gray-900 sm:max-w-none sm:text-lg lg:static lg:mt-0.5 lg:translate-x-0 lg:text-xl">
           {currentPage?.title}
         </h1>
       </div>
