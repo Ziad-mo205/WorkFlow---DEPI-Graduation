@@ -1,5 +1,5 @@
 function TasksList() {
-  return <div>TasksList</div>
+  return <div>TasksList</div>;
 }
 
-export default TasksList
+export default TasksList;

@@ -1,12 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { AdminData, Loading } from "../AdminDashboard";
 
-const AdminOverview = () => {
-  let [loading, setLoading] = useState(true);
-  let [adminName, setAdminName] = useState("Ziad"); // will come from backend later
-  let [leaveRequests, setLeaveRequests] = useState(
-    // will come from backend later
-    "5 leave requests are waiting",
-  );
+const AdminOverview = ({
+  addEmployee,
+  postAnnouncement,
+  setShowAddEmployeeModal,
+  setShowPostAnnouncementModal,
+}) => {
+  const adminData = useContext(AdminData);
+  const adminName = adminData.adminName;
+  const leaveRequestsNum = adminData.leaveRequestsNum;
+  const loading = useContext(Loading);
+
   let message;
   const hour = new Date().getHours();
   if (hour < 12) {
@@ -27,52 +32,55 @@ const AdminOverview = () => {
     day: "numeric",
   });
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-  });
-  useEffect(() => {}, []); // adminName
-  useEffect(() => {}, []); // leaveRequests
+  const skeleton = "bg-gray-200 dark:bg-gray-700/70 rounded animate-pulse";
+
   return (
-    <>
+    <div className="flex mx-8 justify-between flex-col lg:flex-row m-4 ">
       {loading ? (
         <div className="m-4 mx-8 mb-8">
-          <div className="h-6 w-48 bg-gray-200 rounded animate-pulse mb-4"></div>
+          <div className={`h-6 w-48 ${skeleton} mb-4`}></div>
 
           <div className="flex flex-col lg:flex-row gap-3">
-            <div className="h-4 w-52 bg-gray-200 rounded animate-pulse"></div>
-            <div className="h-4 w-48 bg-gray-200 rounded animate-pulse"></div>
+            <div className={`h-4 w-52 ${skeleton}`}></div>
+            <div className={`h-4 w-48 ${skeleton}`}></div>
           </div>
         </div>
       ) : (
-        <div className="flex mx-8 justify-between flex-col lg:flex-row m-4 mb-8">
-          <div className="flex flex-col ">
-            <h2 className="font-bold">
-              {message}, {adminName}
-            </h2>
-            <div className="flex flex-col lg:flex-row">
-              <span className="text-gray-500 ">{day}.</span>
-              <span className="text-gray-500 ">{leaveRequests}</span>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-5 mx-8">
-            <button
-              disabled={loading}
-              className=" btn btn-active hover:bg-gray-300  rounded-xl transition py-7 md:py-4 disabled:opacity-50"
-            >
-              + Post Announcement
-            </button>
-            <button
-              disabled={loading}
-              className=" btn btn-primary hover:bg-blue-700  rounded-xl transition py-7 md:py-4 disabled:opacity-50"
-            >
-              + Add Employee
-            </button>
+        <div className="flex flex-col text-center p-4 lg:text-start lg:p-0">
+          <h2 className="font-bold max-lg:text-2xl dark:text-[#E4E7EB]">
+            {message}, {adminName}
+          </h2>
+          <div className="flex flex-col lg:flex-row">
+            <span className="text-gray-500 dark:text-[#9BA1AE]">{day}....</span>
+            <span className="text-gray-500 dark:text-[#9BA1AE]">
+              {leaveRequestsNum}
+            </span>
           </div>
         </div>
       )}
-    </>
+      <div className="grid grid-cols-2 gap-5 mx-8">
+        <button
+          disabled={loading}
+          onClick={() => {
+            postAnnouncement();
+            setShowPostAnnouncementModal();
+          }}
+          className=" btn btn-active hover:bg-gray-700  rounded-xl transition py-7 md:py-4 disabled:opacity-50 dark:border-[#292E3A] dark:bg-[#20242D] dark:text-[#E4E7EB]"
+        >
+          + Post Announcement
+        </button>
+        <button
+          disabled={loading}
+          onClick={() => {
+            addEmployee();
+            setShowAddEmployeeModal(true);
+          }}
+          className=" btn btn-primary hover:bg-blue-700  rounded-xl transition py-7 md:py-4 disabled:opacity-50"
+        >
+          + Add Employee
+        </button>
+      </div>
+    </div>
   );
 };
 

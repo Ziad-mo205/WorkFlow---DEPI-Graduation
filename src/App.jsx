@@ -15,6 +15,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import TaskDetails from "./pages/TaskDetails";
 import MainLayout from "./Layouts/MainLayout";
+import CreateTask from "./components/tasks/CreateTaskModal";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
         <Route path="/tasks/:taskId" element={<TaskDetails />} />
+        <Route path="/create-task" element={<CreateTask />}></Route>
       </Route>
     </Routes>
   );
