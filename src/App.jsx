@@ -1,7 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+import AuthProvider from "./context/AuthContext";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
-import Dashboard from "./pages/Dashboard";
+import ManagerDashboard from "./pages/ManagerDashboard";
 import ProjectsList from "./pages/ProjectsList";
 import ProjectDetails from "./pages/ProjectDetails";
 import TasksList from "./pages/TasksList";
@@ -15,21 +16,24 @@ import AdminDashboard from "./pages/AdminDashboard";
 import EmployeeDashboard from "./pages/EmployeeDashboard";
 import TaskDetails from "./pages/TaskDetails";
 import MainLayout from "./Layouts/MainLayout";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    <Routes>
+    <AuthProvider>
+      <Routes>
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<LogIn />} />
       <Route element={<MainLayout />}>
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/manager-dashboard" element={<ManagerDashboard />} />
         <Route path="/projects" element={<ProjectsList />} />
         <Route path="/projects/:projectId" element={<ProjectDetails />} />
         <Route path="/tasks" element={<TasksList />} />
         <Route path="/kanban" element={<KanbanBoard />} />
-        <Route path="/employees" element={<EmployeesManagement />} />
+        <Route path="/EmployeesManagement" element={<EmployeesManagement />} />
         <Route path="/leave-requests" element={<LeaveRequests />} />
+        <Route path="/LeaveRequests" element={<LeaveRequests />} />
         <Route path="/announcements" element={<Announcements />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/settings" element={<Settings />} />
@@ -37,7 +41,9 @@ function App() {
         <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
         <Route path="/tasks/:taskId" element={<TaskDetails />} />
       </Route>
-    </Routes>
+      <Route path="*" element={<NotFound />} />
+      </Routes>
+    </AuthProvider>
   );
 }
 
