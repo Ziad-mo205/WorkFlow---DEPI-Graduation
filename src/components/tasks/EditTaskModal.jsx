@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState } from "react";
 
 const inputStyle =
-  'mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-indigo-500'
+  "mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-indigo-500";
 
 const EditTaskModal = ({ task, onClose, onSave }) => {
   const [form, setForm] = useState({
@@ -11,17 +11,17 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
     priority: task.priority,
     status: task.status,
     dueDate: task.dueDate,
-  })
+  });
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    onSave(form)
-    onClose()
-  }
+    e.preventDefault();
+    onSave(task.id, form);
+    onClose();
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
@@ -127,7 +127,7 @@ const EditTaskModal = ({ task, onClose, onSave }) => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default EditTaskModal
+export default EditTaskModal;

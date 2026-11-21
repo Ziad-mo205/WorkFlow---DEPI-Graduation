@@ -1,27 +1,50 @@
-import { useNavigate } from 'react-router-dom'
-import { FiSearch, FiPlus } from 'react-icons/fi'
+import { NavLink } from "react-router-dom";
+import { FiPlus, FiSearch } from "react-icons/fi";
+import {
+  btnPrimary,
+  focusRing,
+  pillActive,
+  pillBase,
+  pillIdle,
+} from "../../styles/ui";
+import { priorities, statuses } from "../../data/tasks";
 
-const selectStyle =
-  'rounded-full border border-slate-300 bg-white px-4 py-2 text-sm text-slate-600 outline-none hover:bg-slate-50 focus:border-indigo-500'
+const statusNames = statuses.map((s) => s.name);
 
-const FilterSelect = ({ label, value, onChange, options }) => (
-  <select
-    value={value}
-    onChange={(e) => onChange(e.target.value)}
-    aria-label={label}
-    className={selectStyle}
-  >
-    <option value="">{label}</option>
-    {options.map((option) => (
-      <option key={option} value={option}>
-        {option}
-      </option>
-    ))}
-  </select>
-)
+const views = [
+  { to: "/tasks", label: "List" },
+  { to: "/kanban", label: "Board" },
+];
 
-const statuses = ['To Do', 'In Progress', 'Review', 'Completed']
-const priorities = ['Urgent', 'High', 'Medium', 'Low']
+const FilterSelect = ({ label, value, onChange, options }) => {
+  const active = value !== "";
+
+  return (
+    <div className="relative">
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        aria-label={label}
+        className={`${pillBase} h-9 appearance-none pr-8 ${active ? pillActive : pillIdle}`}
+      >
+        <option value="">{label}</option>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+      <span
+        aria-hidden="true"
+        className={`pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs ${
+          active ? "text-brand" : "text-gray-600"
+        }`}
+      >
+        ▾
+      </span>
+    </div>
+  );
+};
 
 const TasksToolbar = ({
   search,
@@ -35,81 +58,95 @@ const TasksToolbar = ({
   assignees,
   onClearFilters,
   onCreateClick,
+  canManage = true,
 }) => {
-  const navigate = useNavigate()
-  const noFilters = !status && !priority && !assignee
+  const noFilters = !status && !priority && !assignee;
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      {/* البحث */}
-      <div className="relative w-full sm:w-72">
-        <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+    <div className="flex flex-wrap items-center gap-2">
+      <div className="relative w-full sm:w-64">
+        <FiSearch
+          size={16}
+          aria-hidden="true"
+          className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
+        />
         <input
           type="text"
+          aria-label="Search tasks"
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search tasks…"
-          className="w-full rounded-lg border border-slate-300 bg-white py-3 pl-11 pr-4 text-sm outline-none focus:border-indigo-500"
+          className="h-9 w-full rounded-lg border border-gray-300 bg-white pl-9 pr-3 text-sm text-gray-900 transition-colors placeholder:text-gray-500 hover:border-gray-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-[#c7c9f9]"
         />
       </div>
 
-      {/* الفلاتر */}
-      <div className="flex flex-wrap items-center gap-2">
-        <button
-          onClick={onClearFilters}
-          className={`rounded-full border px-4 py-2 text-sm font-medium ${
-            noFilters
-              ? 'border-indigo-600 bg-indigo-600 text-white'
-              : 'border-slate-300 bg-white text-slate-600 hover:bg-slate-100'
-          }`}
-        >
-          All
-        </button>
+      <button
+        type="button"
+        aria-pressed={noFilters}
+        onClick={onClearFilters}
+        className={`${pillBase} h-9 ${noFilters ? pillActive : pillIdle}`}
+      >
+        All
+      </button>
 
-        <FilterSelect
-          label="Status"
-          value={status}
-          onChange={onStatusChange}
-          options={statuses}
-        />
-        <FilterSelect
-          label="Priority"
-          value={priority}
-          onChange={onPriorityChange}
-          options={priorities}
-        />
+      <FilterSelect
+        label="Status"
+        value={status}
+        onChange={onStatusChange}
+        options={statusNames}
+      />
+      <FilterSelect
+        label="Priority"
+        value={priority}
+        onChange={onPriorityChange}
+        options={priorities}
+      />
+      {canManage && (
         <FilterSelect
           label="Assignee"
           value={assignee}
           onChange={onAssigneeChange}
           options={assignees}
         />
-      </div>
+      )}
 
-      {/* List / Board + Create Task */}
-      <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:ml-auto">
-        <div className="flex rounded-lg border border-slate-200 bg-slate-100 p-1 text-sm font-medium">
-          <button className="rounded-md bg-white px-4 py-1.5 text-slate-900 shadow-sm">
-            List
-          </button>
-          <button
-            onClick={() => navigate('/kanban')}
-            className="rounded-md px-4 py-1.5 text-slate-500 hover:text-slate-800"
-          >
-            Board
-          </button>
-        </div>
-
-        <button
-          onClick={onCreateClick}
-          className="flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-700"
+      <div className="ml-auto flex items-center gap-2">
+        <nav
+          aria-label="Tasks view"
+          className="flex rounded-lg bg-gray-200 p-1"
         >
-          <FiPlus />
-          Create Task
-        </button>
+          {views.map(({ to, label }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end
+              className={({ isActive }) =>
+                `rounded-md px-4 py-1 text-sm font-semibold transition-colors ${focusRing} ${
+                  isActive
+                    ? "bg-white text-gray-900 shadow-sm"
+                    : "text-gray-600 hover:bg-white/60 hover:text-gray-900 active:bg-white/80"
+                }`
+              }
+            >
+              {label}
+            </NavLink>
+          ))}
+        </nav>
+
+        {canManage && (
+          <button
+            type="button"
+            aria-haspopup="dialog"
+            onClick={onCreateClick}
+            className={`${btnPrimary} h-9 px-4`}
+          >
+            <FiPlus size={16} strokeWidth={3} />
+            Create Task
+          </button>
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TasksToolbar
+export default TasksToolbar;

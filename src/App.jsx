@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import AuthProvider from "./context/AuthContext";
+import TasksProvider from "./context/TasksContext";
 import SignUp from "./pages/SignUp";
 import LogIn from "./pages/LogIn";
 import ManagerDashboard from "./pages/ManagerDashboard";
@@ -21,28 +22,34 @@ import NotFound from "./pages/NotFound";
 function App() {
   return (
     <AuthProvider>
-      <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<LogIn />} />
-      <Route element={<MainLayout />}>
-        <Route path="/manager-dashboard" element={<ManagerDashboard />} />
-        <Route path="/projects" element={<ProjectsList />} />
-        <Route path="/projects/:projectId" element={<ProjectDetails />} />
-        <Route path="/tasks" element={<TasksList />} />
-        <Route path="/kanban" element={<KanbanBoard />} />
-        <Route path="/EmployeesManagement" element={<EmployeesManagement />} />
-        <Route path="/leave-requests" element={<LeaveRequests />} />
-        <Route path="/LeaveRequests" element={<LeaveRequests />} />
-        <Route path="/announcements" element={<Announcements />} />
-        <Route path="/profile" element={<UserProfile />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
-        <Route path="/tasks/:taskId" element={<TaskDetails />} />
-      </Route>
-      <Route path="*" element={<NotFound />} />
-      </Routes>
+      <TasksProvider>
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route element={<MainLayout />}>
+            <Route path="/manager-dashboard" element={<ManagerDashboard />} />
+            <Route path="/projects" element={<ProjectsList />} />
+            <Route path="/projects/:projectId" element={<ProjectDetails />} />
+            <Route path="/tasks" element={<TasksList />} />
+            <Route path="/kanban" element={<KanbanBoard />} />
+            <Route path="/employees" element={<EmployeesManagement />} />
+            <Route
+              path="/EmployeesManagement"
+              element={<Navigate to="/employees" replace />}
+            />
+            <Route path="/leave-requests" element={<LeaveRequests />} />
+            <Route path="/LeaveRequests" element={<LeaveRequests />} />
+            <Route path="/announcements" element={<Announcements />} />
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/employee-dashboard" element={<EmployeeDashboard />} />
+            <Route path="/tasks/:taskId" element={<TaskDetails />} />
+          </Route>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </TasksProvider>
     </AuthProvider>
   );
 }

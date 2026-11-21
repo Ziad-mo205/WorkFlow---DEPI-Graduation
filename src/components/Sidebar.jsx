@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import {
   HiOutlineHome,
   HiOutlineFolder,
@@ -8,8 +8,7 @@ import {
 } from "react-icons/hi2";
 import { FaUserCircle } from "react-icons/fa";
 import logo from "../assets/Logo.jpeg";
-
-const user = { name: "Mohamed Mostafa", role: "Manager" };
+import { currentUser as user } from "../data/currentUser";
 
 const links = [
   {
@@ -31,6 +30,8 @@ const getPath = (to) =>
   typeof to === "string" ? to : (to[user.role] ?? "/manager-dashboard");
 
 function Sidebar({ isOpen, onClose }) {
+  const { pathname } = useLocation();
+
   return (
     <>
       {isOpen && (
@@ -54,23 +55,28 @@ function Sidebar({ isOpen, onClose }) {
         </div>
 
         <nav className="flex flex-col gap-1 px-3 pb-4 pt-2 lg:py-4">
-          {links.map(({ label, icon: Icon, to }) => (
-            <NavLink
-              key={label}
-              to={getPath(to)}
-              onClick={onClose}
-              className={({ isActive }) =>
-                `flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-                  isActive
-                    ? "bg-[#eef2ff] text-[#6c63e0]"
-                    : "text-[#6b7080] hover:bg-gray-100"
-                }`
-              }
-            >
-              <Icon className="text-lg" />
-              <span>{label}</span>
-            </NavLink>
-          ))}
+          {links.map(({ label, icon: Icon, to }) => {
+            const isBoardPage =
+              label === "Tasks" && pathname.startsWith("/kanban");
+
+            return (
+              <NavLink
+                key={label}
+                to={getPath(to)}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  `flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                    isActive || isBoardPage
+                      ? "bg-[#eef2ff] text-[#6c63e0]"
+                      : "text-[#6b7080] hover:bg-gray-100"
+                  }`
+                }
+              >
+                <Icon className="text-lg" />
+                <span>{label}</span>
+              </NavLink>
+            );
+          })}
         </nav>
 
         <div className="mt-auto px-3 pb-3">

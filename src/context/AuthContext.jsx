@@ -11,7 +11,9 @@ function AuthProvider({ children }) {
   const [message, setMessage] = useState("");
 
   function login() {
-    setMessage("Login will be available when the API is connected. You are not logged in yet.");
+    setMessage(
+      "Login will be available when the API is connected. You are not logged in yet.",
+    );
   }
 
   return (
