@@ -1,5 +1,7 @@
+import UserProfile from "./UserProfile";
+
 function Settings() {
-  return <div>Settings</div>
+  return <UserProfile />;
 }
 
-export default Settings
+export default Settings;
