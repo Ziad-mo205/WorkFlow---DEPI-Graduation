@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FiPlus, FiEye, FiEdit2, FiTrash2 } from "react-icons/fi";
+import CreateProjectModal from "../components/projects/CreateProjectModal";
+import { focusRing, btnPrimary } from "../styles/ui";
 
 const stats = [
   {
@@ -144,15 +146,6 @@ const roleStyles = {
 
 const cardClass = "rounded-xl border border-gray-200 bg-white shadow-sm";
 
-const focusRing =
-  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand";
-
-const btnBase = `inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg text-sm font-semibold transition-colors ${focusRing}`;
-
-const btnPrimary = `${btnBase} bg-brand text-white hover:bg-[#4039c9] active:bg-[#3730b8]`;
-
-const btnOutline = `${btnBase} border border-gray-300 bg-white text-gray-900 hover:border-brand hover:bg-[#eef2ff] hover:text-brand active:bg-[#e0e7ff]`;
-
 const linkClass = `text-sm font-semibold text-brand transition-colors hover:text-[#3730b8] hover:underline active:text-[#2e2894] ${focusRing}`;
 
 const iconBtn = `flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-md border transition-colors ${focusRing}`;
@@ -220,6 +213,7 @@ function TaskActions({ task }) {
 
 function ManagerDashboard() {
   const [filter, setFilter] = useState("all");
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 
   const pillClass = (name) =>
     `cursor-pointer rounded-full border px-3.5 py-1 text-sm font-medium transition-colors ${focusRing} ${
@@ -239,14 +233,15 @@ function ManagerDashboard() {
             Wednesday, 11 November 2026 · 3 leave requests to review
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <button type="button" className={`${btnOutline} px-4 py-2`}>
+        <div>
+          <button
+            type="button"
+            aria-haspopup="dialog"
+            onClick={() => setIsProjectModalOpen(true)}
+            className={`${btnPrimary} px-4 py-2`}
+          >
             <FiPlus size={16} strokeWidth={3} />
             New Project
-          </button>
-          <button type="button" className={`${btnPrimary} px-4 py-2`}>
-            <FiPlus size={16} strokeWidth={3} />
-            New Task
           </button>
         </div>
       </div>
@@ -450,6 +445,10 @@ function ManagerDashboard() {
           </div>
         </section>
       </div>
+
+      {isProjectModalOpen && (
+        <CreateProjectModal onClose={() => setIsProjectModalOpen(false)} />
+      )}
     </div>
   );
 }
